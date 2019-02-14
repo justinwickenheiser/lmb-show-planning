@@ -1,0 +1,129 @@
+/*
+ * Laker Blue:  #0065A4;
+ * Dark Blue:	#1A2E3D;
+ * Blue/Grey:	#485C6C;
+ * Light Blue:	#D1F5FF;
+ * Orange:		#E79C25;
+ * Seafoam Green: #00C6B3;
+ * Yellow/Tan: 	#FFF7D6;
+ */
+
+/* Global Declaration */
+body {
+	margin: 0;
+}
+h1 {
+	font-size: 2.5em;
+}
+h2 {
+	font-size: 2em;
+}
+h3 {
+	font-size: 1.75em;
+}
+
+.btn-primary {
+	background:transparent;
+	border: 2px solid #1A2E3D;
+	border-radius: 4px;
+	color: #1A2E3D;
+	text-decoration: none;
+	padding: 10px 30px;
+	text-transform: uppercase;
+	letter-spacing: .01em;
+
+}
+
+.btn-primary:hover {
+	color: #FFF;
+	border: 2px solid #1A2E3D;
+	background-color: #1A2E3D;
+}
+
+.content-primary {
+	background-color: #485C6C;
+	color: #FFF7D6;
+}
+
+.content-primary h3 {
+	color: #E79C25;
+	margin: 0;
+}
+
+/* Cards */
+.card-row {
+	max-width: 1000px;
+	margin: 20px auto;
+}
+
+.card-container {
+	display: inline-block;
+	max-width: 33%;
+	margin: 1em auto;
+	vertical-align: top;
+}
+
+.card {
+	/*max-width: 400px;*/
+	/*max-width: 33%;*/
+	/*margin: 1em auto;*/
+	/*display: inline-block;
+	margin: 1em;*/
+	padding: 0 .5em;
+}
+
+.card h3 {
+	background-color: #00C6B3; /* Seafoam Green */
+	color: #1A2E3D;
+	text-align: center;
+	margin: 0;
+	padding: .2em 0;
+}
+.card p {
+	border: 3px solid #00C6B3; /* Seafoam Green */
+	border-top: 0px;
+	margin: 0;
+	padding: .75em;
+	text-align: justify;
+}
+
+/* Call to Action */
+.callToAction {
+	background-color: #E79C25; /* Orange */
+	text-align: center;
+	padding: 2.5em;
+}
+
+.callToAction h3 {
+	color: #1A2E3D;
+	text-transform: uppercase;
+	padding-bottom: 1em;
+	margin: 0;
+}
+
+/* Header */
+.header-image > img {
+	width: 100%;
+}
+.headerTitle {
+	color: #00C6B3; /* Seafoam green */
+}
+.headerSubTitle {
+	color: #FFF7D6; /* Yellow/tan */
+}
+.header-text {
+	text-align: right;
+	background-color: #1a2e3d; /* dark blue*/
+	padding: .5em;
+}
+.headerTitle > h1, .headerSubTitle > h2 {
+	margin: 0;
+}
+
+/* Footer */
+.footer {
+	background-color: #1A2E3D;
+	padding: 20px 50px;
+	text-align: center;
+	color: #FFF7D6;
+}
