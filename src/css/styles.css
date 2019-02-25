@@ -21,16 +21,20 @@ h2 {
 h3 {
 	font-size: 1.75em;
 }
+label {
+	font-weight: bold;
+	display: block;
+}
+
+#main {
+	margin-top: 1em;
+}
 
 .btn-primary {
 	background:transparent;
 	border: 2px solid #1A2E3D;
 	border-radius: 4px;
 	color: #1A2E3D;
-	text-decoration: none;
-	padding: 10px 30px;
-	text-transform: uppercase;
-	letter-spacing: .01em;
 
 }
 
@@ -38,6 +42,22 @@ h3 {
 	color: #FFF;
 	border: 2px solid #1A2E3D;
 	background-color: #1A2E3D;
+}
+
+.btn-cancel {
+	background:transparent;
+	border: 2px solid #E79C25;
+	border-radius: 4px;
+	color: #E79C25;
+}
+.btn-cancel:hover {
+	color: #FFF;
+	border: 2px solid #E79C25;
+	background-color: #E79C25;
+}
+
+.btn-lg {
+	padding: 10px 30px;
 }
 
 .content-primary {
@@ -126,4 +146,12 @@ h3 {
 	padding: 20px 50px;
 	text-align: center;
 	color: #FFF7D6;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.req {
+	color: red;
 }
