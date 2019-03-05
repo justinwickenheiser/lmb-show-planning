@@ -8,14 +8,6 @@ import LibraryEdit from './library/edit.jsx';
 import LibraryNew from './library/new.jsx';
 import Shows from './shows.jsx';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { getSongs } from '../js/data.js';
-
-// Styles
-import '../css/styles.css';
-import '../css/bootstrap_fixes.css';
-import '../css/tables.css';
-
-var lib = getSongs();
 
 class App extends Component {
   render() {
@@ -30,7 +22,7 @@ class App extends Component {
 				<Route exact path="/library" render={(props) => <LibraryIndex songs={lib} />} />
 				<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
 				<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
-				<Route path="/library/post" />
+				
 				<Route path="/shows" component={Shows} />
 			</div>
 		</Router>

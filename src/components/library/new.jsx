@@ -1,5 +1,4 @@
 import React from 'react';
-// import '../../css/library.css';
 
 export default function LibraryNew(props) {
 
@@ -7,33 +6,35 @@ export default function LibraryNew(props) {
 		<div className="container">
 			<h1>New Song</h1>
 			
-			<form>
+			<form method="post" action="/library/post">
+				<input type="hidden" id="songId" name="form[songId]" defaultValue="" className="form-control" />
+				
 				<p className="form-group">
 					<label htmlFor="title">
 						Title<span className="req">*</span>
 					</label>
-					<input type="text" id="title" name="title" className="form-control" />
+					<input type="text" id="title" name="form[title]" className="form-control" />
 				</p>
 
 				<p className="form-group">
 					<label htmlFor="arranger">
 						Arranger<span className="req">*</span>
 					</label>
-					<input type="text" id="arranger" name="arranger" className="form-control" />
+					<input type="text" id="arranger" name="form[arranger]" className="form-control" />
 				</p>
 
 				<p className="form-group">
 					<label htmlFor="length">
 						Length<span className="req">*</span>
 					</label>
-					<input type="text" id="length" name="length" className="form-control" />
+					<input type="text" id="length" name="form[length]" className="form-control" />
 				</p>
 
 				<p className="form-group">
 					<label htmlFor="audio">
 						Audio
 					</label>
-					<input type="text" id="audio" name="audio" className="form-control" />
+					<input type="text" id="audio" name="form[audio]" className="form-control" />
 				</p>
 
 				<p className="form-group">

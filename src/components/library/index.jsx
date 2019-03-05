@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../css/library.css';
 
 // Return a list of songs that is filter-able
 export default function LibraryIndex(props) {
