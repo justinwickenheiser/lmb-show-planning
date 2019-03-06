@@ -38,7 +38,7 @@ label {
 
 }
 
-.btn-primary:hover {
+.btn-primary:hover  {
 	color: #FFF;
 	border: 2px solid #1A2E3D;
 	background-color: #1A2E3D;
@@ -154,4 +154,20 @@ label {
 
 .req {
 	color: red;
+}
+
+
+.loginContainer {
+	margin: 1em auto;
+	width: 40%;
+	padding: 2em;
+	background-color: #e6e6e6;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+.loginContainer .form-control {
+	width: 100%;
+}
+.loginSubmit {
+	margin-bottom: 0;
 }

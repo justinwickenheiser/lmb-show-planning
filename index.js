@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const uuid = require('uuid/v4');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
-
-
+const sha256 = require('./src/js/Sha256.js');
 const { Client } = require('pg');
 
 const client = new Client({
@@ -15,13 +19,70 @@ const client = new Client({
 
 client.connect();
 
+const SALT = 'Jlfi8h308y*^T31gflkUhd97f7&^*^R$khg#G[v}';
+
+// configure passport.js to use the local strategy
+passport.use(new LocalStrategy({ usernameField: 'username' },(username, password, done) => {
+	// hash the password
+	password = sha256.hash(password+SALT);
+
+	var text = 'SELECT user_id, username, password FROM lmb_showplanning_user WHERE username = $1';
+	var values = [username];
+	client.query(text, values, (err,res) => {
+		if (err) {
+			console.log(err.stack);
+		} else if (res.rows[0]) {
+			const user = res.rows[0];
+			console.log(user);
+			if(username === user.username && password === user.password) {
+				// Local strategy returned true
+				return done(null, user)
+			}
+		}
+	});
+}));
+
+// tell passport how to serialize the user
+passport.serializeUser((user, done) => {
+	// console.log('Inside serializeUser callback. User id is save to the session file store here')
+	console.log(user);
+	return done(null, user.user_id);
+});
+
+passport.deserializeUser((id, done) => {
+	// console.log('Inside deserializeUser callback')
+	// console.log(`The user id passport saved in the session file store is: ${id}`)
+	var text = 'SELECT user_id FROM lmb_showplanning_user WHERE user_id = $1';
+	var values = [id];
+	client.query(text, values, (err,res) => {
+		if (err) {
+			console.log(err.stack);
+			return false;
+		} else if (res.rows[0]) {
+			const user = res.rows[0].user_id === id ? res.rows[0] : false; 
+			return done(null, user);
+		}
+	});
+});
+
 
 // Initialize the app
 const app = express();
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(session({
+	genid: (req) => {
+		// console.log('Inside session middleware genid function')
+		// console.log(`Request object sessionID from client: ${req.sessionID}`)
+		return uuid() // use UUIDs for session IDs
+	},
+	store: new FileStore(),
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('view engine', 'ejs');
 
@@ -85,7 +146,7 @@ app.get('/library', function (req, res) {
 			console.log(err.stack);
 		} else {
 			// render the page.
-			res.render('index', {data: result.rows});
+			res.render('index', {data: result.rows, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 		}
 	});
 	
@@ -98,7 +159,7 @@ app.get('/library/edit/:id', function (req, res) {
 			console.log(err.stack);
 		} else {
 			// render the page.
-			res.render('index', {data: result.rows});
+			res.render('index', {data: result.rows, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 		}
 	});
 	
@@ -120,6 +181,27 @@ app.get('/library/delete/:id', function (req, res) {
 });
 
 
+app.post('/login', (req, res, next) => {
+	passport.authenticate('local', (err, user, info) => {
+		req.login(user, (err) => {
+			// redirect
+			res.redirect('/');
+		})
+	})(req, res, next);
+});
+
+
+// Shows
+app.get('/shows', function (req, res) {
+	// Must be logged in
+	if (req.isAuthenticated()) {
+		// render the page.
+		res.render('index', {data: [], urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
+	} else {
+		res.redirect('/');
+	}
+
+});
 
 // React JS
 app.get('/src/dist/app_render.bundle.js', function(req, res) {
@@ -136,7 +218,9 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 app.get('*', function(req, res) {
-	res.sendFile(path.join(__dirname + '/public/index.html'));
+	// res.sendFile(path.join(__dirname + '/public/index.html'));
+	// render the page.
+	res.render('index', {data: [], urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 
 

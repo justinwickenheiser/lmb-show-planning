@@ -1,7 +1,5 @@
 -- Table: public.lmb_showplanning_song
 
--- DROP TABLE public.lmb_showplanning_song;
-
 CREATE TABLE public.lmb_showplanning_song
 (
     song_id numeric(15,0) NOT NULL,
@@ -18,3 +16,23 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.lmb_showplanning_song
     OWNER to lmbapp;
+
+
+
+-- Table: public.lmb_showplanning_user
+CREATE TABLE public.lmb_showplanning_user
+(
+    user_id numeric(15, 0),
+    username text,
+    password text,
+    PRIMARY KEY (user_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lmb_showplanning_user
+    OWNER to lmbapp;
+COMMENT ON TABLE public.lmb_showplanning_user
+    IS 'The user (admin) that can access restricted areas.';
