@@ -33,7 +33,6 @@ passport.use(new LocalStrategy({ usernameField: 'username' },(username, password
 			console.log(err.stack);
 		} else if (res.rows[0]) {
 			const user = res.rows[0];
-			console.log(user);
 			if(username === user.username && password === user.password) {
 				// Local strategy returned true
 				return done(null, user)
@@ -45,7 +44,6 @@ passport.use(new LocalStrategy({ usernameField: 'username' },(username, password
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
 	// console.log('Inside serializeUser callback. User id is save to the session file store here')
-	console.log(user);
 	return done(null, user.user_id);
 });
 
@@ -190,6 +188,11 @@ app.post('/login', (req, res, next) => {
 	})(req, res, next);
 });
 
+app.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+});
+
 
 // Shows
 app.get('/shows', function (req, res) {
@@ -215,7 +218,8 @@ app.get('/public/*', function(req, res) {
 
 // viewed at http://localhost:3000
 app.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname + '/public/index.html'));
+	// res.sendFile(path.join(__dirname + '/public/index.html'));
+	res.render('index', {data: [], urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 app.get('*', function(req, res) {
 	// res.sendFile(path.join(__dirname + '/public/index.html'));
