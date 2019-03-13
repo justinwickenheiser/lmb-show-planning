@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="/public/css/styles.css">
 		<link rel="stylesheet" href="/public/css/tables.css">
 		<link rel="stylesheet" href="/public/css/library.css">
+		<link rel="stylesheet" href="/public/css/shows.css">
 		<link rel="stylesheet" href="/public/css/bootstrap_fixes.css">
 
 		<title>LMB Show Planner</title>
@@ -28,7 +29,7 @@
 <script type="text/javascript">
 	var lib = [];
 	// Turn the data into a JS object
-	<% data.forEach(function(row) { %>
+	<% data.songs.forEach(function(row) { %>
 		var temp = {};
 		temp.songId = '<%= row.song_id %>';
 		temp.title = '<%= row.title %>';
@@ -37,6 +38,29 @@
 		temp.audio = '<%= row.audio %>';
 		lib.push(temp);
 	<% }); %>
+
+	var shows = [];
+	// Turn the data into a JS object
+	<% data.shows.forEach(function(row) { %>
+		var temp = {};
+		temp.showId = '<%= row.show_id %>';
+		temp.title = '<%= row.title %>';
+		temp.details = '<%= row.details %>';
+		temp.season = '<%= row.season %>';
+		temp.showNumber = '<%= row.show_number %>';
+		temp.date = '<%= row.date %>';
+		shows.push(temp);
+	<% }); %>
+
+	var selectedSongs = [];
+	// Turn the data into a JS object
+	<% data.selectedSongs.forEach(function(row) { %>
+		var temp = {};
+		temp.showId = '<%= row.show_id %>';
+		temp.songId = '<%= row.song_id %>';
+		selectedSongs.push(temp);
+	<% }); %>
+
 
 	// urlPath
 	var urlPath = []

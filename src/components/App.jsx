@@ -6,7 +6,9 @@ import Home from './home.jsx';
 import LibraryIndex from './library/index.jsx';
 import LibraryEdit from './library/edit.jsx';
 import LibraryNew from './library/new.jsx';
-import Shows from './shows.jsx';
+import ShowIndex from './shows/index.jsx';
+import ShowNew from './shows/new.jsx';
+import ShowEdit from './shows/edit.jsx';
 import Login from './login.jsx';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -24,7 +26,10 @@ class App extends Component {
 				<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
 				<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
 				
-				<Route path="/shows" component={Shows} />
+				<Route exact path="/shows" render={(props) => <ShowIndex shows={shows} />} />
+				<Route path="/shows/new" render={(props) => <ShowNew songs={lib} {...props} />} />
+				<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={lib} selectedSongs={selectedSongs} {...props} />} />
+
 				<Route path="/login" component={Login} />
 			</div>
 		</Router>
