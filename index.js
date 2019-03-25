@@ -8,6 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const sha256 = require('./src/js/Sha256.js');
 const { Client } = require('pg');
+const port = process.enc.PORT || 3000;
 
 const client = new Client({
 	user: 'lmbapp',
@@ -389,7 +390,7 @@ app.get('*', function(req, res) {
 
 
 // Start the server
-app.listen(3000, () => {
+app.listen(port, () => {
 	console.log('Serving at http://localhost:3000');
 });
 
