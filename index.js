@@ -27,8 +27,6 @@ if (process.env.NODE_ENV === 'production') {
 	client.connect();
 }
 
-client.connect();
-
 const SALT = 'Jlfi8h308y*^T31gflkUhd97f7&^*^R$khg#G[v}';
 
 // configure passport.js to use the local strategy
