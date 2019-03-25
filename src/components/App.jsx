@@ -13,31 +13,57 @@ import Login from './login.jsx';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
-  render() {
-	return (
-	<div className="App">
-		<Header />
-		<Nav url={urlPath} isAuthenticated={isAuthenticated} />
+	constructor(props) {
+		super(props);
+		this.state = {
+			songs: [],
+			shows: [],
+		};
+		this.loadSongs = this.loadSongs.bind(this);
+		this.loadShows = this.loadShows.bind(this);
+	}
 
-		<Router>
-			<div id="main" role="main">
-				<Route exact path="/" component={Home} />
-				<Route exact path="/library" render={(props) => <LibraryIndex songs={lib} />} />
-				<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
-				<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
-				
-				<Route exact path="/shows" render={(props) => <ShowIndex shows={shows} />} />
-				<Route path="/shows/new" render={(props) => <ShowNew songs={lib} {...props} />} />
-				<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={lib} selectedSongs={selectedSongs} {...props} />} />
+	loadSongs() {
+		// This would normally be an Ajax request
+		this.setState({
+			songs: []
+		});
+	}
+	loadShows() {
+		// This would normally be an Ajax request
+		this.setState({
+			shows: []
+		});
+	}
+	componentDidMount() {
+		console.log('App Mounted');
+		this.loadSongs();
+	}
+	render() {
+		return (
+			<div className="App">
+				<Header />
+				<Nav url={urlPath} isAuthenticated={isAuthenticated} />
 
-				<Route path="/login" component={Login} />
+				<Router>
+					<div id="main" role="main">
+						<Route exact path="/" component={Home} />
+						<Route exact path="/library" render={(props) => <LibraryIndex songs={this.state.songs} />} />
+						<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
+						<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
+						
+						<Route exact path="/shows" render={(props) => <ShowIndex shows={this.state.shows} />} />
+						<Route path="/shows/new" render={(props) => <ShowNew songs={lib} {...props} />} />
+						<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={lib} selectedSongs={selectedSongs} {...props} />} />
+
+						<Route path="/login" component={Login} />
+					</div>
+				</Router>
+
+				<Footer />
 			</div>
-		</Router>
-
-		<Footer />
-	</div>
-	);
-  }
+		);
+	}
 }
 
 export default App;
