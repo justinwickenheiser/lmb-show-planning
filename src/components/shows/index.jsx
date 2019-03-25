@@ -7,13 +7,13 @@ export default function ShowIndex(props) {
 			<td>{item.title}</td>
 			<td>{item.details}</td>
 			<td>{item.season}</td>
-			<td>{item.showNumber}</td>
+			<td>{item.show_number}</td>
 			<td>{item.date}</td>
 			<td className="nowrap">
-				<a href={"/shows/edit/"+item.showId} className="btn btn-info" aria-label={"Edit " + item.title}>
+				<a href={"/shows/edit/"+item.show_id} className="btn btn-info" aria-label={"Edit " + item.title}>
 					Edit
 				</a>
-				<a href={"/shows/delete/"+item.showId} className="btn btn-danger" aria-label={"Delete " + item.title}>
+				<a href={"/shows/delete/"+item.show_id} className="btn btn-danger" aria-label={"Delete " + item.title}>
 					Delete
 				</a>
 			</td>

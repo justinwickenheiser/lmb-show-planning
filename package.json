@@ -1,13 +1,14 @@
 {
   "name": "lmb-show-planning",
   "version": "0.1.0",
-  "private": true,  
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "build:prod": "webpack -p"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",

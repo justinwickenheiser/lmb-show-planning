@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
 import Nav from './nav.jsx';
@@ -24,20 +25,23 @@ class App extends Component {
 	}
 
 	loadSongs() {
-		// This would normally be an Ajax request
-		this.setState({
-			songs: []
-		});
+		axios.get('/songs.json')
+			.then(res => {
+				this.setState({ songs: res.data });
+			})
+			.catch(err => console.log(err));
 	}
 	loadShows() {
-		// This would normally be an Ajax request
-		this.setState({
-			shows: []
-		});
+		axios.get('/shows.json')
+			.then(res => {
+				this.setState({ shows: res.data });
+			})
+			.catch(err => console.log(err));
 	}
 	componentDidMount() {
 		console.log('App Mounted');
 		this.loadSongs();
+		this.loadShows();
 	}
 	render() {
 		return (
@@ -53,8 +57,8 @@ class App extends Component {
 						<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
 						
 						<Route exact path="/shows" render={(props) => <ShowIndex shows={this.state.shows} />} />
-						<Route path="/shows/new" render={(props) => <ShowNew songs={lib} {...props} />} />
-						<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={lib} selectedSongs={selectedSongs} {...props} />} />
+						<Route path="/shows/new" render={(props) => <ShowNew songs={this.state.songs} />} />
+						<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={this.state.songs} selectedSongs={selectedSongs} />} />
 
 						<Route path="/login" component={Login} />
 					</div>

@@ -6,15 +6,15 @@ export default function LibraryIndex(props) {
 		<tr key={"song-"+key}>
 			<td>{item.title}</td>
 			<td>{item.arranger}</td>
-			<td>{item.length}</td>
+			<td>{item.song_length}</td>
 			<td>
 				<a href={item.audio} aria-label={"Recording of " + item.title} target="_blank">Recording</a>
 			</td>
 			<td className="nowrap">
-				<a href={"/library/edit/"+item.songId} className="btn btn-info" aria-label={"Edit " + item.title}>
+				<a href={"/library/edit/"+item.song_id} className="btn btn-info" aria-label={"Edit " + item.title}>
 					Edit
 				</a>
-				<a href={"/library/delete/"+item.songId} className="btn btn-danger" aria-label={"Delete " + item.title}>
+				<a href={"/library/delete/"+item.song_id} className="btn btn-danger" aria-label={"Delete " + item.title}>
 					Delete
 				</a>
 			</td>

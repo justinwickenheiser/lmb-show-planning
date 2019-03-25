@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 		ssl:true
 	});
 } 
-console.log(client);
+
 client.connect();
 
 const SALT = 'Jlfi8h308y*^T31gflkUhd97f7&^*^R$khg#G[v}';
@@ -93,6 +93,59 @@ app.set('view engine', 'ejs');
 
 
 // API CALLS
+app.get('/songs.json', function (req, res) {
+	client.query('SELECT * FROM lmb_showplanning_song ORDER BY song_id', (err, result) => {
+		if (err) {
+			console.log(err.stack);
+		} else {
+			// dump the results
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result.rows));
+		}
+	});
+});
+app.get('/songs/:id.json', function (req, res) {
+	client.query('SELECT * FROM lmb_showplanning_song WHERE song_id = $1 ', [req.params.id], (err, result) => {
+		if (err) {
+			console.log(err.stack);
+		} else {
+			// dump the results
+			res.setHeader('Content-Type', 'application/json');
+    		res.end(JSON.stringify(result.rows));
+		}
+	});
+});
+app.get('/shows.json', function (req, res) {
+	client.query('SELECT * FROM lmb_showplanning_show ORDER BY show_id', (err, result) => {
+		if (err) {
+			console.log(err.stack);
+		} else {
+			// dump the results
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result.rows));
+		}
+	});
+});
+
+
+
+
+
+app.post('/login', (req, res, next) => {
+	passport.authenticate('local', (err, user, info) => {
+		req.login(user, (err) => {
+			// redirect
+			res.redirect('/');
+		})
+	})(req, res, next);
+});
+
+app.get('/logout', function(req, res){
+	req.logout();
+	res.redirect('/');
+});
+
+// Library (songs)
 app.post('/library/post', function (req, res) {
 	var form = req.body.form;
 	// does the song exist?
@@ -143,33 +196,12 @@ app.post('/library/post', function (req, res) {
 	res.redirect('/library');
 	
 });
-
 app.get('/library', function (req, res) {
-	
-	client.query('SELECT * FROM lmb_showplanning_song ORDER BY song_id', (err, result) => {
-		if (err) {
-			console.log(err.stack);
-		} else {
-			// render the page.
-			res.render('index', {data: {songs: result.rows, shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
-		}
-	});
-	
+	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
-
 app.get('/library/edit/:id', function (req, res) {
-	
-	client.query('SELECT * FROM lmb_showplanning_song WHERE song_id = $1 ', [req.params.id], (err, result) => {
-		if (err) {
-			console.log(err.stack);
-		} else {
-			// render the page.
-			res.render('index', {data: {songs: result.rows, shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
-		}
-	});
-	
+	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});	
 });
-
 app.get('/library/delete/:id', function (req, res) {
 	
 	client.query('DELETE FROM lmb_showplanning_song WHERE song_id = $1 ', [req.params.id], (err, result) => {
@@ -185,35 +217,12 @@ app.get('/library/delete/:id', function (req, res) {
 	
 });
 
-
-app.post('/login', (req, res, next) => {
-	passport.authenticate('local', (err, user, info) => {
-		req.login(user, (err) => {
-			// redirect
-			res.redirect('/');
-		})
-	})(req, res, next);
-});
-
-app.get('/logout', function(req, res){
-	req.logout();
-	res.redirect('/');
-});
-
-
 // Shows
 app.get('/shows', function (req, res) {
 	// Must be logged in
 	if (req.isAuthenticated()) {
 		// render the page.
-		client.query('SELECT * FROM lmb_showplanning_show ORDER BY show_id', (err, result) => {
-			if (err) {
-				console.log(err.stack);
-			} else {
-				// render the page.
-				res.render('index', {data: {songs: [] , shows: result.rows, selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
-			}
-		});
+		res.render('index', {data: {songs: [] , shows: [], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 	} else {
 		res.redirect('/');
 	}
@@ -368,6 +377,7 @@ app.get('/shows/delete/:id', function (req, res) {
 	res.redirect('/shows');
 	
 });
+
 
 // React JS
 app.get('/src/dist/app_render.bundle.js', function(req, res) {
