@@ -8,7 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const sha256 = require('./src/js/Sha256.js');
 const { Client } = require('pg');
-const port = process.enc.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const client = new Client({
 	user: 'lmbapp',
