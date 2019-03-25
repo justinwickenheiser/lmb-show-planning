@@ -15,7 +15,7 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public.lmb_showplanning_song
-    OWNER to lmbapp;
+    OWNER to kctrqawqktnseh;
 
 
 
@@ -33,7 +33,7 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public.lmb_showplanning_user
-    OWNER to lmbapp;
+    OWNER to kctrqawqktnseh;
 COMMENT ON TABLE public.lmb_showplanning_user
     IS 'The user (admin) that can access restricted areas.';
 
@@ -55,7 +55,7 @@ WITH (
 );
 
 ALTER TABLE public.lmb_showplanning_show
-    OWNER to lmbapp;
+    OWNER to kctrqawqktnseh;
 
 
 -- Table: public.lmb_showplanning_showsong
@@ -71,6 +71,6 @@ WITH (
 );
 
 ALTER TABLE public.lmb_showplanning_showsong
-    OWNER to lmbapp;
+    OWNER to kctrqawqktnseh;
 COMMENT ON TABLE public.lmb_showplanning_showsong
     IS 'Join table between shows and songs';
