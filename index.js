@@ -10,22 +10,21 @@ const sha256 = require('./src/js/Sha256.js');
 const { Client } = require('pg');
 const port = process.env.PORT || 3000;
 
+var client = new Client({
+	user: 'lmbapp',
+	host: 'localhost',
+	database: 'lmbapp',
+	password: 'lmb-password',
+	port: 5432,
+});
 if (process.env.NODE_ENV === 'production') {
-	const client = new Client({
+	client = new Client({
 		connectionString: process.env.DATABASE_URL,
 		ssl:true
 	});
-	client.connect();
-} else {
-	const client = new Client({
-		user: 'lmbapp',
-		host: 'localhost',
-		database: 'lmbapp',
-		password: 'lmb-password',
-		port: 5432,
-	});
-	client.connect();
-}
+} 
+console.log(client);
+client.connect();
 
 const SALT = 'Jlfi8h308y*^T31gflkUhd97f7&^*^R$khg#G[v}';
 
