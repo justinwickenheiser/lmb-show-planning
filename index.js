@@ -10,11 +10,12 @@ const sha256 = require('./src/js/Sha256.js');
 const { Client } = require('pg');
 const port = process.env.PORT || 3000;
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
 	const client = new Client({
 		connectionString: process.env.DATABASE_URL,
 		ssl:true
 	});
+	client.connect();
 } else {
 	const client = new Client({
 		user: 'lmbapp',
@@ -23,6 +24,7 @@ if(process.env.NODE_ENV === 'production') {
 		password: 'lmb-password',
 		port: 5432,
 	});
+	client.connect();
 }
 
 client.connect();
