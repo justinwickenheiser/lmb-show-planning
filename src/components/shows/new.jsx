@@ -3,7 +3,7 @@ import React from 'react';
 export default function ShowNew(props) {
 	var songs = props.songs.map((item, key) => 
 		<label key={"song-"+key} htmlFor={"song-"+key}>
-			<input type="checkbox" id={"song-"+key} name="form[song]" value={item.songId} /> {item.title}
+			<input type="checkbox" id={"song-"+key} name="form[song]" value={item.song_id} /> {item.title}
 		</label>
 	);
 
@@ -25,7 +25,7 @@ export default function ShowNew(props) {
 					<label htmlFor="details">
 						Details<span className="req">*</span>
 					</label>
-					<textarea id="details" name="form[details]" cols="50" rows="5" className="form-control"></textarea>
+					<input type="text" id="details" name="form[details]" className="form-control" />
 				</p>
 
 				<p className="form-group">

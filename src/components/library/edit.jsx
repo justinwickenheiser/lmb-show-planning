@@ -6,7 +6,6 @@ export default class LibraryEdit extends React.Component {
 	constructor(props) {
 		super(props);
 		this.song_id = props.match.params.id;
-		this.song = {'song_id': 1};
 		this.loadSongs = this.loadSongs.bind(this);
 		this.state = {
 			song: {}
@@ -14,11 +13,9 @@ export default class LibraryEdit extends React.Component {
 	}
 
 	loadSongs() {
-		// This would normally be an Ajax request
 		axios.get(`/songs/${this.song_id}.json`)
 			.then(res => {
 				this.setState({ song: res.data[0] });
-				console.log(this.state.song)
 			})
 			.catch(err => console.log(err));
 	}

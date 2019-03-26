@@ -111,12 +111,34 @@ app.get('/songs/:id.json', function (req, res) {
 		} else {
 			// dump the results
 			res.setHeader('Content-Type', 'application/json');
-    		res.end(JSON.stringify(result.rows));
+			res.end(JSON.stringify(result.rows));
 		}
 	});
 });
 app.get('/shows.json', function (req, res) {
 	client.query('SELECT * FROM lmb_showplanning_show ORDER BY show_id', (err, result) => {
+		if (err) {
+			console.log(err.stack);
+		} else {
+			// dump the results
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result.rows));
+		}
+	});
+});
+app.get('/shows/:id.json', function (req, res) {
+	client.query('SELECT * FROM lmb_showplanning_show WHERE show_id = $1 ', [req.params.id], (err, result) => {
+		if (err) {
+			console.log(err.stack);
+		} else {
+			// dump the results
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result.rows));
+		}
+	});
+});
+app.get('/shows/:id/selected_songs.json', function (req, res) {
+	client.query('SELECT * FROM lmb_showplanning_showsong WHERE show_id = $1 ', [req.params.id], (err, result) => {
 		if (err) {
 			console.log(err.stack);
 		} else {
@@ -197,10 +219,10 @@ app.post('/library/post', function (req, res) {
 	
 });
 app.get('/library', function (req, res) {
-	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
+	res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 app.get('/library/edit/:id', function (req, res) {
-	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});	
+	res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});	
 });
 app.get('/library/delete/:id', function (req, res) {
 	
@@ -222,7 +244,7 @@ app.get('/shows', function (req, res) {
 	// Must be logged in
 	if (req.isAuthenticated()) {
 		// render the page.
-		res.render('index', {data: {songs: [] , shows: [], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
+		res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 	} else {
 		res.redirect('/');
 	}
@@ -231,46 +253,14 @@ app.get('/shows', function (req, res) {
 app.get('/shows/new', function (req, res) {
 	// Must be logged in
 	if (req.isAuthenticated()) {
-		// get songs
-		client.query('SELECT * FROM lmb_showplanning_song ORDER BY song_id', (err, result) => {
-			if (err) {
-				console.log(err.stack);
-			} else {
-				// render the page.
-				res.render('index', {data: {songs: result.rows, shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
-			}
-		});
+		res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 	} else {
 		res.redirect('/');
 	}
 
 });
 app.get('/shows/edit/:id', function (req, res) {
-	
-	client.query('SELECT * FROM lmb_showplanning_show WHERE show_id = $1 ', [req.params.id], (err, result) => {
-		if (err) {
-			console.log(err.stack);
-		} else {
-			// Get the songs for show
-			client.query('SELECT * FROM lmb_showplanning_showsong WHERE show_id = $1 ', [req.params.id], (err, qrySelectedSongs) => {
-				if (err) {
-					console.log(err.stack);
-				} else {
-					// Get all songs
-					client.query('SELECT * FROM lmb_showplanning_song ORDER BY song_id', (err, qrySongs) => {
-						if (err) {
-							console.log(err.stack);
-						} else {
-							// render the page.
-							res.render('index', {data: {songs: qrySongs.rows, shows: result.rows, selectedSongs: qrySelectedSongs.rows}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
-						}
-					});
-				}
-			});
-			
-		}
-	});
-	
+	res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 app.post('/shows/post', function (req, res) {
 	var form = req.body.form;
@@ -392,12 +382,12 @@ app.get('/public/*', function(req, res) {
 // viewed at http://localhost:3000
 app.get('/', function(req, res) {
 	// res.sendFile(path.join(__dirname + '/public/index.html'));
-	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
+	res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 app.get('*', function(req, res) {
 	// res.sendFile(path.join(__dirname + '/public/index.html'));
 	// render the page.
-	res.render('index', {data: {songs: [], shows:[], selectedSongs: []}, urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
+	res.render('index', {urlPath: (req.url).split("/"), isAuthenticated: req.isAuthenticated()});
 });
 
 

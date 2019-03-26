@@ -58,7 +58,7 @@ class App extends Component {
 						
 						<Route exact path="/shows" render={(props) => <ShowIndex shows={this.state.shows} />} />
 						<Route path="/shows/new" render={(props) => <ShowNew songs={this.state.songs} />} />
-						<Route path="/shows/edit/:id" render={(props) => <ShowEdit songs={this.state.songs} selectedSongs={selectedSongs} />} />
+						<Route path="/shows/edit/:id" render={(props) => <ShowEdit {...props} />} />
 
 						<Route path="/login" component={Login} />
 					</div>

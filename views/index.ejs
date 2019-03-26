@@ -27,41 +27,6 @@
 	</body>
 	
 <script type="text/javascript">
-	var lib = [];
-	// Turn the data into a JS object
-	<% data.songs.forEach(function(row) { %>
-		var temp = {};
-		temp.songId = '<%= row.song_id %>';
-		temp.title = '<%= row.title %>';
-		temp.arranger = '<%= row.arranger %>';
-		temp.length = '<%= row.song_length %>';
-		temp.audio = '<%= row.audio %>';
-		lib.push(temp);
-	<% }); %>
-
-	var shows = [];
-	// Turn the data into a JS object
-	<% data.shows.forEach(function(row) { %>
-		var temp = {};
-		temp.showId = '<%= row.show_id %>';
-		temp.title = '<%= row.title %>';
-		temp.details = '<%= row.details %>';
-		temp.season = '<%= row.season %>';
-		temp.showNumber = '<%= row.show_number %>';
-		temp.date = '<%= row.date %>';
-		shows.push(temp);
-	<% }); %>
-
-	var selectedSongs = [];
-	// Turn the data into a JS object
-	<% data.selectedSongs.forEach(function(row) { %>
-		var temp = {};
-		temp.showId = '<%= row.show_id %>';
-		temp.songId = '<%= row.song_id %>';
-		selectedSongs.push(temp);
-	<% }); %>
-
-
 	// urlPath
 	var urlPath = []
 	<% urlPath.forEach(function(circuit) { %>
