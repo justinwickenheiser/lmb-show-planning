@@ -171,3 +171,33 @@ label {
 .loginSubmit {
 	margin-bottom: 0;
 }
+
+
+.cf-code-block {
+	padding: 19px;
+	margin-bottom: 20px;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px;
+	background-color: #272822;
+	color: #1FDAFF; /* Blue as the base color */
+	font-family: "Courier New", monospace;
+	word-break: break-word;
+}
+.cf-comment {
+	color: #616C82;
+}
+.cf-white {
+	color: white;
+}
+.cf-red {
+	color: #F06082;
+}
+.cf-green {
+	color: #11ebc3;
+}
+.cf-yellow {
+	color: #FFE59C;
+}
+.cf-purple {
+	color: #B69CF7;
+}

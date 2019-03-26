@@ -28,6 +28,15 @@ export default function Nav(props) {
 			  </button>
 			<div className="collapse navbar-collapse" id="navbarNav">
 				<ul className="navbar-nav">
+					{props.url[1] === "" ? (
+						<li className="nav-item active">
+							<a className="nav-link" href="/">Home</a>
+						</li>
+					) : (
+						<li className="nav-item">
+							<a className="nav-link" href="/">Home</a>
+						</li>
+					)}
 					{props.url[1] === 'library' ? (
 						<li className="nav-item active">
 							<a className="nav-link" href="/library">Music Library</a>
