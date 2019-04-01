@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagination from '../pagination.jsx';
 
 // Return a list of songs that is filter-able
 export default function LibraryIndex(props) {
@@ -42,6 +43,7 @@ export default function LibraryIndex(props) {
 					{tableRows}
 				</tbody>
 			</table>
+			<Pagination onClick={props.updatePagination} currentPage={props.page} recordCount={props.recordCount} maxRecords={props.maxRecords} minPageItems={2} />
 		</div>
 	);
 }

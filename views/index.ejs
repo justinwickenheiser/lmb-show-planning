@@ -26,16 +26,16 @@
 		<div id="root"></div>
 	</body>
 	
-<script type="text/javascript">
-	// urlPath
-	var urlPath = []
-	<% urlPath.forEach(function(circuit) { %>
-		urlPath.push('<%= circuit %>');
-	<% }); %>
+	<script type="text/javascript">
+		// urlPath
+		var urlPath = []
+		<% urlPath.forEach(function(circuit) { %>
+			urlPath.push('<%= circuit %>');
+		<% }); %>
 
-	// isAuthenticated
-	var isAuthenticated = ('<%= isAuthenticated %>' == 'true');
-</script>	
+		// isAuthenticated
+		var isAuthenticated = ('<%= isAuthenticated %>' == 'true');
+	</script>	
 
 	<script src="/src/dist/app_render.bundle.js"></script>
 </html>

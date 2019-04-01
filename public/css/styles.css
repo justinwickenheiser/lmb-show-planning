@@ -172,6 +172,35 @@ label {
 	margin-bottom: 0;
 }
 
+/* Pagination */
+.pagination-container {
+	text-align: center;
+
+}
+ul.pagination {
+	display: inline-flex;
+}
+ul.pagination li {
+	margin: 0 .125em;
+}
+ul.pagination li button {
+	padding: .5em 1em;
+	border-radius: 4px;
+	border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+	border-style: solid;
+	border-width: 1px;
+}
+ul.pagination li.active button {
+	background-color: #1A2E3D;
+	color: #FFF7D6;
+}
+ul.pagination li.separator {
+	padding: .5em 1em;
+	border-radius: 4px;
+	border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+	border-style: solid;
+	border-width: 1px;
+}
 
 .cf-code-block {
 	padding: 19px;

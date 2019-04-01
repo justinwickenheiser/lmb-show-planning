@@ -17,17 +17,24 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			songs: [],
+			allSongs: [],
+			limitedSongs: [],
 			shows: [],
+			currentPage: 1,
+			maxRecords: 2
 		};
 		this.loadSongs = this.loadSongs.bind(this);
 		this.loadShows = this.loadShows.bind(this);
+		this.updatePage = this.updatePage.bind(this);
 	}
 
-	loadSongs() {
+	loadSongs(limit) {
 		axios.get('/songs.json')
 			.then(res => {
-				this.setState({ songs: res.data });
+				this.setState({ allSongs: res.data });
+				if (limit) {
+					this.updatePage(this.state.currentPage);
+				}
 			})
 			.catch(err => console.log(err));
 	}
@@ -38,9 +45,22 @@ class App extends Component {
 			})
 			.catch(err => console.log(err));
 	}
+	updatePage(pg) {
+		var filteredSongs = [];
+		var startIndex = (pg-1)*this.state.maxRecords;
+		for (var i = startIndex; i<startIndex+this.state.maxRecords; i++) {
+			if (this.state.allSongs[i] !== undefined) {
+				filteredSongs.push(this.state.allSongs[i]);
+			}
+		}
+		this.setState({
+			limitedSongs: filteredSongs,
+			currentPage: pg
+		});
+	}
 	componentDidMount() {
 		console.log('App Mounted');
-		this.loadSongs();
+		this.loadSongs(true);
 		this.loadShows();
 	}
 	render() {
@@ -52,12 +72,12 @@ class App extends Component {
 				<Router>
 					<div id="main" role="main">
 						<Route exact path="/" component={Home} />
-						<Route exact path="/library" render={(props) => <LibraryIndex songs={this.state.songs} />} />
+						<Route exact path="/library" render={(props) => <LibraryIndex songs={this.state.limitedSongs} page={this.state.currentPage} maxRecords={this.state.maxRecords} recordCount={this.state.allSongs.length} updatePagination={this.updatePage} />} />
 						<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
 						<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
 						
 						<Route exact path="/shows" render={(props) => <ShowIndex shows={this.state.shows} />} />
-						<Route path="/shows/new" render={(props) => <ShowNew songs={this.state.songs} />} />
+						<Route path="/shows/new" render={(props) => <ShowNew songs={this.state.allSongs} />} />
 						<Route path="/shows/edit/:id" render={(props) => <ShowEdit {...props} />} />
 
 						<Route path="/login" component={Login} />
