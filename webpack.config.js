@@ -11,6 +11,8 @@ var config = {
 		filename: "[name].bundle.js"
 	},
 	module: {
+		exprContextRegExp: /^\.\/.*$/,
+        unknownContextRegExp: /^\.\/.*$/,
 		rules: [
 			{
 				test: /\.js?/,
