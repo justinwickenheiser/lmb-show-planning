@@ -2,30 +2,19 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 
 import ShowIndex from '../components/shows/Index';
+import Card from '../components/shows/Index';
 
 describe('A ShowIndex component', function() {
 
 	var props = {
-		shows: []
+		songs: [],
+		shows: [],
+		selectedSongs: {}
 	};
 
-	var tableRows = props.shows.map((item, key) => 
-		<tr key={"show-"+key}>
-			<td>{item.title}</td>
-			<td>{item.details}</td>
-			<td>{item.season}</td>
-			<td>{item.show_number}</td>
-			<td>{item.date}</td>
-			<td className="nowrap">
-				<a href={"/shows/edit/"+item.show_id} className="btn btn-info" aria-label={"Edit " + item.title}>
-					Edit
-				</a>
-				<a href={"/shows/delete/"+item.show_id} className="btn btn-danger" aria-label={"Delete " + item.title}>
-					Delete
-				</a>
-			</td>
-		</tr>
-	);
+	var cards = props.shows.map((item, key) => 
+			<Card show={item} selectedSongs={this.state.selectedSongs[item.show_id]} songs={this.state.songs} key={"show-"+key} />
+		);
 
 	const wrapper = shallow(<ShowIndex shows={props.shows} />);
 
@@ -38,21 +27,9 @@ describe('A ShowIndex component', function() {
 					New Show
 				</a>
 			</p>
-			<table id="showTable" className="table table-striped table-mobile">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Details</th>
-						<th>Season</th>
-						<th>Show #</th>
-						<th>Show Date</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{tableRows}
-				</tbody>
-			</table>
+			<div className="row">
+				{cards}
+			</div>
 		</div>)).toBe(true);
 	});
 

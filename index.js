@@ -94,7 +94,7 @@ app.set('view engine', 'ejs');
 
 // API CALLS
 app.get('/songs.json', function (req, res) {
-	client.query('SELECT * FROM lmb_showplanning_song ORDER BY song_id', (err, result) => {
+	client.query('SELECT * FROM lmb_showplanning_song ORDER BY title', (err, result) => {
 		if (err) {
 			console.log(err.stack);
 		} else {
@@ -116,7 +116,7 @@ app.get('/songs/:id.json', function (req, res) {
 	});
 });
 app.get('/shows.json', function (req, res) {
-	client.query('SELECT * FROM lmb_showplanning_show ORDER BY show_id', (err, result) => {
+	client.query('SELECT * FROM lmb_showplanning_show ORDER BY season DESC, show_number', (err, result) => {
 		if (err) {
 			console.log(err.stack);
 		} else {

@@ -76,7 +76,7 @@ class App extends Component {
 						<Route path="/library/edit/:id" render={(props) => <LibraryEdit {...props} />} />
 						<Route path="/library/new" render={(props) => <LibraryNew {...props} />} />
 						
-						<Route exact path="/shows" render={(props) => <ShowIndex shows={this.state.shows} />} />
+						<Route exact path="/shows" render={(props) => <ShowIndex />} />
 						<Route path="/shows/new" render={(props) => <ShowNew songs={this.state.allSongs} />} />
 						<Route path="/shows/edit/:id" render={(props) => <ShowEdit {...props} />} />
 

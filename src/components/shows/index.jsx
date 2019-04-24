@@ -1,50 +1,75 @@
 import React from 'react';
+import axios from 'axios';
+import Card from './card.jsx';
 
 // Return a list of songs that is filter-able
-export default function ShowIndex(props) {
-	var tableRows = props.shows.map((item, key) => 
-		<tr key={"show-"+key}>
-			<td>{item.title}</td>
-			<td>{item.details}</td>
-			<td>{item.season}</td>
-			<td>{item.show_number}</td>
-			<td>{item.date}</td>
-			<td className="nowrap">
-				<a href={"/shows/edit/"+item.show_id} className="btn btn-info" aria-label={"Edit " + item.title}>
-					Edit
-				</a>
-				<a href={"/shows/delete/"+item.show_id} className="btn btn-danger" aria-label={"Delete " + item.title}>
-					Delete
-				</a>
-			</td>
-		</tr>
-	);
+export default class ShowIndex extends React.Component {
 
+	constructor(props) {
+		super(props);
+		this.loadShows = this.loadShows.bind(this);
+		this.loadSelectedSongs = this.loadSelectedSongs.bind(this);
 
+		this.state = {
+			songs: [],
+			shows: [],
+			selectedSongs: {}
+		};
+	}
+	loadShows() {
+		axios.get('/shows.json')
+			.then(res => {
+				this.setState({ shows: res.data });
+				// now loop over shows and get their selected songs for each show
+				
+				for (var i = 0; i < res.data.length; i++) {
+					this.loadSelectedSongs(res.data[i].show_id);
+				}
+			})
+			.catch(err => console.log(err));
+	}
+	loadSelectedSongs(showId) {
+		axios.get(`/shows/${showId}/selected_songs.json`)
+			.then(res => {
+				var obj = {
+					[showId]: res.data
+				}
+				var merged = {...obj, ...this.state.selectedSongs}
+				this.setState({ selectedSongs: merged });
+			})
+			.catch(err => console.log(err));
+	}
+	loadSongs() {
+		axios.get('/songs.json')
+			.then(res => {
+				this.setState({ songs: res.data });
+			})
+			.catch(err => console.log(err));
+	}
+
+	componentDidMount() {
+		this.loadSongs();
+		this.loadShows();
+	}
 	
-	return (
-		<div className="container">
-			<h1>Shows</h1>
-			<p>
-				<a href={"/shows/new"} className="btn btn-success">
-					New Show
-				</a>
-			</p>
-			<table id="showTable" className="table table-striped table-mobile">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Details</th>
-						<th>Season</th>
-						<th>Show #</th>
-						<th>Show Date</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{tableRows}
-				</tbody>
-			</table>
-		</div>
-	);
+	render () {
+		var cards = this.state.shows.map((item, key) => 
+			<Card show={item} selectedSongs={this.state.selectedSongs[item.show_id]} songs={this.state.songs} key={"show-"+key} />
+		);
+
+		return (
+			<div className="container">
+				<h1>Shows</h1>
+				<p>
+					<a href={"/shows/new"} className="btn btn-success">
+						New Show
+					</a>
+				</p>
+				<div className="row">
+					{cards}
+				</div>
+			</div>
+		);
+
+	}
 }

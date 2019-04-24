@@ -1,18 +1,31 @@
-/* Mobile Table styling */
-@media screen and (max-width: 767px) {
-	#showTable td:nth-of-type(1):before {
-		content: "Title:";
-	}
-	#showTable td:nth-of-type(2):before {
-		content: "Details:";
-	}
-	#showTable td:nth-of-type(3):before {
-		content: "Season:";
-	}
-	#showTable td:nth-of-type(4):before {
-		content: "Show #";
-	}
-	#showTable td:nth-of-type(5):before {
-		content: "Show Date";
+.card {
+	overflow: hidden;
+	margin-bottom: 1em;
+}
+.card-season {
+	background-color: #1A2E3D;
+	color: #FFF7D6;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.5em;
+	margin: 0 -0.5em;
+	padding: .5em 0;
+}
+.card-details {
+	text-align: center;
+	margin: 0 -0.5em;
+	padding: .25em 0;
+	background-color: #E79C25;
+}
+.card-body ul {
+	margin-bottom: 0;
+}
+.card-footer .btn {
+	width: 100%;
+}
+
+@media screen and (max-width: 991px) {
+	.card-footer .btn.btn-info {
+		margin-bottom: 4px;
 	}
 }

@@ -12,17 +12,14 @@ var config = {
 	},
 	module: {
 		exprContextRegExp: /^\.\/.*$/,
-        unknownContextRegExp: /^\.\/.*$/,
+		unknownContextRegExp: /^\.\/.*$/,
 		rules: [
 			{
 				test: /\.js?/,
 				include: [
 					path.resolve(__dirname, "./src")
 				],
-				loader: "babel-loader",
-				query: {
-					presets: ["react","es2015","stage-2"]
-				}
+				loader: "babel-loader"
 			},
 			{
 				test: /\.css$/,
