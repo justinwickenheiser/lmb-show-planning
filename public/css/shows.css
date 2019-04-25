@@ -17,6 +17,10 @@
 	padding: .25em 0;
 	background-color: #E79C25;
 }
+.card-header {
+	margin: 0 -0.5em;
+	text-align: center;
+}
 .card-body ul {
 	margin-bottom: 0;
 }
